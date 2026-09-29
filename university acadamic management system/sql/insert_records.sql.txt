@@ -1,0 +1,126 @@
+
+-- =====================================================
+-- University Academic Management System
+-- File: insert_records.sql
+-- Database: MySQL
+-- 10 records for each of the 6 tables
+-- =====================================================
+
+-- 1. DEPARTMENT: 10 RECORDS
+INSERT INTO Department
+(Department_ID, Department_Name, Department_Code, HOD_Name)
+VALUES
+(1, 'Computer Science and Engineering', 'CSE', 'Dr. Ravi Kumar'),
+(2, 'Artificial Intelligence and Machine Learning', 'AIML', 'Dr. Suresh Reddy'),
+(3, 'Information Technology', 'IT', 'Dr. Priya Sharma'),
+(4, 'Electronics and Communication Engineering', 'ECE', 'Dr. Anil Kumar'),
+(5, 'Electrical and Electronics Engineering', 'EEE', 'Dr. Lakshmi Rao'),
+(6, 'Mechanical Engineering', 'MECH', 'Dr. Venkat Rao'),
+(7, 'Civil Engineering', 'CIVIL', 'Dr. Mahesh Babu'),
+(8, 'Data Science', 'DS', 'Dr. Kavitha Devi'),
+(9, 'Cyber Security', 'CYBER', 'Dr. Arun Kumar'),
+(10, 'Business Administration', 'MBA', 'Dr. Geetha Rani');
+
+-- 2. STUDENT: 10 RECORDS
+INSERT INTO Student
+(Student_ID, Student_Name, Roll_Number, Gender, DOB, Age,
+ Email, Phone_No, Admission_Date, Address, Department_ID)
+VALUES
+(101, 'Sasank Pavan Teja', '24AIML001', 'Male', '2008-05-30', 18,
+ 'sasank@gmail.com', '9876543210', '2025-07-01', 'Eluru', 2),
+(102, 'Rahul Kumar', '24CSE002', 'Male', '2007-08-15', 19,
+ 'rahul@gmail.com', '9876543211', '2025-07-01', 'Vijayawada', 1),
+(103, 'Priya Sharma', '24IT003', 'Female', '2007-11-20', 18,
+ 'priya@gmail.com', '9876543212', '2025-07-01', 'Guntur', 3),
+(104, 'Arjun Reddy', '24ECE004', 'Male', '2007-04-10', 19,
+ 'arjun@gmail.com', '9876543213', '2025-07-01', 'Hyderabad', 4),
+(105, 'Ananya Rao', '24EEE005', 'Female', '2008-01-25', 18,
+ 'ananya@gmail.com', '9876543214', '2025-07-01', 'Rajahmundry', 5),
+(106, 'Kiran Kumar', '24MECH006', 'Male', '2007-06-18', 19,
+ 'kiran@gmail.com', '9876543215', '2025-07-01', 'Kakinada', 6),
+(107, 'Sneha Reddy', '24CIVIL007', 'Female', '2008-02-12', 18,
+ 'sneha@gmail.com', '9876543216', '2025-07-01', 'Visakhapatnam', 7),
+(108, 'Vikram Singh', '24DS008', 'Male', '2007-09-05', 19,
+ 'vikram@gmail.com', '9876543217', '2025-07-01', 'Nellore', 8),
+(109, 'Keerthi Devi', '24CYBER009', 'Female', '2008-03-22', 18,
+ 'keerthi@gmail.com', '9876543218', '2025-07-01', 'Tirupati', 9),
+(110, 'Rohit Verma', '24MBA010', 'Male', '2007-12-10', 18,
+ 'rohit@gmail.com', '9876543219', '2025-07-01', 'Bhimavaram', 10);
+
+-- 3. FACULTY: 10 RECORDS
+INSERT INTO Faculty
+(Faculty_ID, Faculty_Name, Qualification, Designation,
+ Email, Phone_No, Join_Date, Experience, Department_ID)
+VALUES
+(201, 'Dr. Ravi Kumar', 'Ph.D CSE', 'Professor',
+ 'ravi@university.com', '9000000001', '2015-06-10', 11, 1),
+(202, 'Dr. Suresh Reddy', 'Ph.D AI', 'Professor',
+ 'suresh@university.com', '9000000002', '2016-07-15', 10, 2),
+(203, 'Dr. Priya Sharma', 'Ph.D IT', 'Associate Professor',
+ 'priya@university.com', '9000000003', '2017-08-20', 9, 3),
+(204, 'Dr. Anil Kumar', 'Ph.D ECE', 'Professor',
+ 'anil@university.com', '9000000004', '2014-05-12', 12, 4),
+(205, 'Dr. Lakshmi Rao', 'Ph.D EEE', 'Associate Professor',
+ 'lakshmi@university.com', '9000000005', '2018-06-18', 8, 5),
+(206, 'Dr. Venkat Rao', 'M.Tech Mechanical', 'Professor',
+ 'venkat@university.com', '9000000006', '2013-07-10', 13, 6),
+(207, 'Dr. Mahesh Babu', 'Ph.D Civil', 'Professor',
+ 'mahesh@university.com', '9000000007', '2015-08-05', 11, 7),
+(208, 'Dr. Kavitha Devi', 'Ph.D Data Science', 'Associate Professor',
+ 'kavitha@university.com', '9000000008', '2019-01-10', 7, 8),
+(209, 'Dr. Arun Kumar', 'Ph.D Cyber Security', 'Professor',
+ 'arun@university.com', '9000000009', '2016-03-15', 10, 9),
+(210, 'Dr. Geetha Rani', 'MBA, Ph.D', 'Professor',
+ 'geetha@university.com', '9000000010', '2012-06-20', 14, 10);
+
+-- 4. COURSE: 10 RECORDS
+INSERT INTO Course
+(Course_ID, Course_Code, Course_Name, Credits, Semester,
+ Department_ID, Faculty_ID)
+VALUES
+(301, 'CSE101', 'Data Structures', 4, 3, 1, 201),
+(302, 'AIML101', 'Machine Learning', 4, 3, 2, 202),
+(303, 'IT101', 'Database Management Systems', 4, 3, 3, 203),
+(304, 'ECE101', 'Digital Electronics', 3, 3, 4, 204),
+(305, 'EEE101', 'Electrical Circuits', 3, 3, 5, 205),
+(306, 'MECH101', 'Engineering Mechanics', 3, 3, 6, 206),
+(307, 'CIVIL101', 'Structural Engineering', 4, 3, 7, 207),
+(308, 'DS101', 'Data Analytics', 4, 3, 8, 208),
+(309, 'CYBER101', 'Network Security', 4, 3, 9, 209),
+(310, 'MBA101', 'Business Management', 3, 3, 10, 210);
+
+-- 5. ENROLLMENT: 10 RECORDS
+INSERT INTO Enrollment
+(Enrollment_ID, Student_ID, Course_ID, Enrollment_Date,
+ Academic_Year, Semester)
+VALUES
+(401, 101, 302, '2026-07-01', '2026-27', 3),
+(402, 102, 301, '2026-07-01', '2026-27', 3),
+(403, 103, 303, '2026-07-01', '2026-27', 3),
+(404, 104, 304, '2026-07-01', '2026-27', 3),
+(405, 105, 305, '2026-07-01', '2026-27', 3),
+(406, 106, 306, '2026-07-01', '2026-27', 3),
+(407, 107, 307, '2026-07-01', '2026-27', 3),
+(408, 108, 308, '2026-07-01', '2026-27', 3),
+(409, 109, 309, '2026-07-01', '2026-27', 3),
+(410, 110, 310, '2026-07-01', '2026-27', 3);
+
+-- 6. RESULT: 10 RECORDS
+INSERT INTO Result
+(Result_ID, Enrollment_ID, Internal_Marks, External_Marks,
+ Total_Marks, Grade, Result_Status)
+VALUES
+(501, 401, 28, 62, 90, 'A+', 'PASS'),
+(502, 402, 25, 58, 83, 'A', 'PASS'),
+(503, 403, 27, 60, 87, 'A+', 'PASS'),
+(504, 404, 24, 55, 79, 'B+', 'PASS'),
+(505, 405, 26, 57, 83, 'A', 'PASS'),
+(506, 406, 22, 48, 70, 'B', 'PASS'),
+(507, 407, 29, 64, 93, 'A+', 'PASS'),
+(508, 408, 25, 59, 84, 'A', 'PASS'),
+(509, 409, 23, 51, 74, 'B+', 'PASS'),
+(510, 410, 27, 61, 88, 'A+', 'PASS');
+
+-- =====================================================
+-- END OF INSERT RECORDS
+-- =====================================================

@@ -1,0 +1,255 @@
+
+-- =====================================================
+-- University Academic Management System
+-- File: sql_queries.sql
+-- Database: MySQL
+-- =====================================================
+
+-- 1. Display all departments
+SELECT * FROM Department;
+
+-- 2. Display all students
+SELECT * FROM Student;
+
+-- 3. Display all faculty members
+SELECT * FROM Faculty;
+
+-- 4. Display all courses
+SELECT * FROM Course;
+
+-- 5. Display all enrollments
+SELECT * FROM Enrollment;
+
+-- 6. Display all results
+SELECT * FROM Result;
+
+-- 7. Retrieve students from the AIML department
+SELECT Student_ID, Student_Name, Roll_Number, Email
+FROM Student
+WHERE Department_ID = 2;
+
+-- 8. Display students in alphabetical order
+SELECT Student_ID, Student_Name, Department_ID
+FROM Student
+ORDER BY Student_Name ASC;
+
+-- 9. INNER JOIN: Students with department names
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    s.Roll_Number,
+    d.Department_Name
+FROM Student s
+INNER JOIN Department d
+    ON s.Department_ID = d.Department_ID;
+
+-- 10. INNER JOIN: Faculty with department names
+SELECT
+    f.Faculty_ID,
+    f.Faculty_Name,
+    f.Designation,
+    d.Department_Name
+FROM Faculty f
+INNER JOIN Department d
+    ON f.Department_ID = d.Department_ID;
+
+-- 11. JOIN: Courses with department and faculty details
+SELECT
+    c.Course_ID,
+    c.Course_Code,
+    c.Course_Name,
+    c.Credits,
+    d.Department_Name,
+    f.Faculty_Name
+FROM Course c
+INNER JOIN Department d
+    ON c.Department_ID = d.Department_ID
+INNER JOIN Faculty f
+    ON c.Faculty_ID = f.Faculty_ID;
+
+-- 12. JOIN: Student enrollment details
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    c.Course_Name,
+    e.Academic_Year,
+    e.Semester,
+    e.Enrollment_Date
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Course c
+    ON e.Course_ID = c.Course_ID;
+
+-- 13. JOIN: Student marks and grades
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    c.Course_Name,
+    r.Internal_Marks,
+    r.External_Marks,
+    r.Total_Marks,
+    r.Grade,
+    r.Result_Status
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Course c
+    ON e.Course_ID = c.Course_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+ORDER BY r.Total_Marks DESC;
+
+-- 14. COUNT: Total number of students
+SELECT COUNT(*) AS Total_Students
+FROM Student;
+
+-- 15. COUNT: Total number of faculty members
+SELECT COUNT(*) AS Total_Faculty
+FROM Faculty;
+
+-- 16. COUNT: Total number of courses
+SELECT COUNT(*) AS Total_Courses
+FROM Course;
+
+-- 17. GROUP BY: Number of students in each department
+SELECT
+    d.Department_Name,
+    COUNT(s.Student_ID) AS Student_Count
+FROM Department d
+LEFT JOIN Student s
+    ON d.Department_ID = s.Department_ID
+GROUP BY d.Department_ID, d.Department_Name
+ORDER BY d.Department_ID;
+
+-- 18. Aggregate: Average, highest and lowest marks
+SELECT
+    AVG(Total_Marks) AS Average_Marks,
+    MAX(Total_Marks) AS Highest_Marks,
+    MIN(Total_Marks) AS Lowest_Marks
+FROM Result;
+
+-- 19. GROUP BY: Number of students by grade
+SELECT
+    Grade,
+    COUNT(*) AS Student_Count
+FROM Result
+GROUP BY Grade
+ORDER BY Grade;
+
+-- 20. HAVING: Grades obtained by more than one student
+SELECT
+    Grade,
+    COUNT(*) AS Student_Count
+FROM Result
+GROUP BY Grade
+HAVING COUNT(*) > 1;
+
+-- 21. BETWEEN: Students scoring between 80 and 90
+SELECT
+    s.Student_Name,
+    r.Total_Marks,
+    r.Grade
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+WHERE r.Total_Marks BETWEEN 80 AND 90
+ORDER BY r.Total_Marks DESC;
+
+-- 22. LIKE: Students whose names begin with S
+SELECT Student_ID, Student_Name
+FROM Student
+WHERE Student_Name LIKE 'S%';
+
+-- 23. Subquery: Students scoring above average
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    r.Total_Marks,
+    r.Grade
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+WHERE r.Total_Marks > (
+    SELECT AVG(Total_Marks)
+    FROM Result
+);
+
+-- 24. Subquery: Student or students with the highest marks
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    r.Total_Marks,
+    r.Grade
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+WHERE r.Total_Marks = (
+    SELECT MAX(Total_Marks)
+    FROM Result
+);
+
+-- 25. DISTINCT: List departments that have students
+SELECT DISTINCT Department_ID
+FROM Student
+ORDER BY Department_ID;
+
+-- 26. UPDATE: Change a student's address
+-- Example uses Student_ID 101
+-- UPDATE Student
+-- SET Address = 'Eluru, Andhra Pradesh'
+-- WHERE Student_ID = 101;
+
+-- 27. UPDATE: Change a student's email
+-- UPDATE Student
+-- SET Email = 'newemail@example.com'
+-- WHERE Student_ID = 101;
+
+-- 28. CRUD: Retrieve a student by ID
+SELECT *
+FROM Student
+WHERE Student_ID = 101;
+
+-- 29. Report: Academic performance by department
+SELECT
+    d.Department_Name,
+    COUNT(r.Result_ID) AS Students_Assessed,
+    AVG(r.Total_Marks) AS Average_Marks,
+    MAX(r.Total_Marks) AS Highest_Marks
+FROM Department d
+INNER JOIN Student s
+    ON d.Department_ID = s.Department_ID
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+GROUP BY d.Department_ID, d.Department_Name
+ORDER BY Average_Marks DESC;
+
+-- 30. Report: Students who passed
+SELECT
+    s.Student_ID,
+    s.Student_Name,
+    c.Course_Name,
+    r.Total_Marks,
+    r.Grade,
+    r.Result_Status
+FROM Student s
+INNER JOIN Enrollment e
+    ON s.Student_ID = e.Student_ID
+INNER JOIN Course c
+    ON e.Course_ID = c.Course_ID
+INNER JOIN Result r
+    ON e.Enrollment_ID = r.Enrollment_ID
+WHERE r.Result_Status = 'PASS'
+ORDER BY r.Total_Marks DESC;
+
+-- =====================================================
+-- END OF SQL QUERIES
+-- =====================================================

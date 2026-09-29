@@ -1,0 +1,99 @@
+
+-- =====================================================
+-- University Academic Management System
+-- File: tables.sql
+-- Database: MySQL
+-- =====================================================
+
+-- 1. Department Table
+CREATE TABLE Department (
+    Department_ID INT PRIMARY KEY,
+    Department_Name VARCHAR(100) NOT NULL,
+    Department_Code VARCHAR(20) UNIQUE,
+    HOD_Name VARCHAR(100)
+);
+
+-- 2. Student Table
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY,
+    Student_Name VARCHAR(100) NOT NULL,
+    Roll_Number VARCHAR(30) UNIQUE,
+    Gender VARCHAR(20),
+    DOB DATE,
+    Age INT,
+    Email VARCHAR(100) UNIQUE,
+    Phone_No VARCHAR(15),
+    Admission_Date DATE,
+    Address VARCHAR(200),
+    Department_ID INT,
+    CONSTRAINT fk_student_dept
+        FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID)
+);
+
+-- 3. Faculty Table
+CREATE TABLE Faculty (
+    Faculty_ID INT PRIMARY KEY,
+    Faculty_Name VARCHAR(100) NOT NULL,
+    Qualification VARCHAR(100),
+    Designation VARCHAR(50),
+    Email VARCHAR(100) UNIQUE,
+    Phone_No VARCHAR(15),
+    Join_Date DATE,
+    Experience INT,
+    Department_ID INT,
+    CONSTRAINT fk_faculty_dept
+        FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID)
+);
+
+-- 4. Course Table
+CREATE TABLE Course (
+    Course_ID INT PRIMARY KEY,
+    Course_Code VARCHAR(20) UNIQUE,
+    Course_Name VARCHAR(100) NOT NULL,
+    Credits INT CHECK (Credits > 0),
+    Semester INT,
+    Department_ID INT,
+    Faculty_ID INT,
+    CONSTRAINT fk_course_dept
+        FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID),
+    CONSTRAINT fk_course_faculty
+        FOREIGN KEY (Faculty_ID)
+        REFERENCES Faculty(Faculty_ID)
+);
+
+-- 5. Enrollment Table
+CREATE TABLE Enrollment (
+    Enrollment_ID INT PRIMARY KEY,
+    Student_ID INT NOT NULL,
+    Course_ID INT NOT NULL,
+    Enrollment_Date DATE,
+    Academic_Year VARCHAR(20),
+    Semester INT,
+    CONSTRAINT fk_enroll_student
+        FOREIGN KEY (Student_ID)
+        REFERENCES Student(Student_ID),
+    CONSTRAINT fk_enroll_course
+        FOREIGN KEY (Course_ID)
+        REFERENCES Course(Course_ID)
+);
+
+-- 6. Result Table
+CREATE TABLE Result (
+    Result_ID INT PRIMARY KEY,
+    Enrollment_ID INT NOT NULL,
+    Internal_Marks INT,
+    External_Marks INT,
+    Total_Marks INT,
+    Grade VARCHAR(5),
+    Result_Status VARCHAR(20),
+    CONSTRAINT fk_result_enrollment
+        FOREIGN KEY (Enrollment_ID)
+        REFERENCES Enrollment(Enrollment_ID)
+);
+
+-- =====================================================
+-- END OF TABLE CREATION
+-- =====================================================
